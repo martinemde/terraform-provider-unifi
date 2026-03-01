@@ -1000,14 +1000,18 @@ func (r *wanResource) networkToModel(
 	diags.Append(d...)
 	model.Vlan = vlanObj
 
-	// Egress QoS Settings
-	egressQosValue := egressQosModel{
-		Enabled:  types.BoolPointerValue(network.WANEgressQOSEnabled),
-		Priority: types.Int64PointerValue(network.WANEgressQOS),
+	// Egress QoS Settings - null when neither field is returned by the API
+	if network.WANEgressQOSEnabled != nil || network.WANEgressQOS != nil {
+		egressQosValue := egressQosModel{
+			Enabled:  types.BoolPointerValue(network.WANEgressQOSEnabled),
+			Priority: types.Int64PointerValue(network.WANEgressQOS),
+		}
+		egressQosObj, d := types.ObjectValueFrom(ctx, egressQosValue.AttributeTypes(), egressQosValue)
+		diags.Append(d...)
+		model.EgressQoS = egressQosObj
+	} else {
+		model.EgressQoS = types.ObjectNull(egressQosModel{}.AttributeTypes())
 	}
-	egressQosObj, d := types.ObjectValueFrom(ctx, egressQosValue.AttributeTypes(), egressQosValue)
-	diags.Append(d...)
-	model.EgressQoS = egressQosObj
 
 	// QoS Settings
 	model.DHCPCoS = types.Int64PointerValue(network.WANDHCPCos)
@@ -1067,11 +1071,12 @@ func (r *wanResource) networkToModel(
 	diags.Append(d...)
 	model.SmartQ = smartqObj
 
-	// UPnP Settings
-	model.UPnPEnabled = types.BoolPointerValue(network.UPnPEnabled)
+	// UPnP Settings - use UPnPLanEnabled (bool, defaults to false) since the
+	// API may not return the pointer-typed UPnPEnabled field for WAN networks.
+	model.UPnPEnabled = types.BoolValue(network.UPnPLanEnabled)
 	model.UPnPWANInterface = types.StringPointerValue(network.UPnPWANInterface)
-	model.UPnPNatPMPEnabled = types.BoolPointerValue(network.UPnPNatPMPEnabled)
-	model.UPnPSecureMode = types.BoolPointerValue(network.UPnPSecureMode)
+	model.UPnPNatPMPEnabled = boolPointerOrFalse(network.UPnPNatPMPEnabled)
+	model.UPnPSecureMode = boolPointerOrFalse(network.UPnPSecureMode)
 
 	// Load Balance Settings
 	model.LoadBalanceType = types.StringPointerValue(network.WANLoadBalanceType)
@@ -1159,4 +1164,12 @@ func (r *wanResource) networkToModel(
 	}
 
 	return diags
+}
+
+// boolPointerOrFalse converts a *bool to types.Bool, defaulting nil to false.
+func boolPointerOrFalse(v *bool) basetypes.BoolValue {
+	if v != nil {
+		return types.BoolValue(*v)
+	}
+	return types.BoolValue(false)
 }

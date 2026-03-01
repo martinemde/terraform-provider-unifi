@@ -403,8 +403,8 @@ github.com/magiconair/properties v1.8.10 h1:s31yESBquKXCV9a/ScB3ESkOjUYYv+X0rg8S
 github.com/magiconair/properties v1.8.10/go.mod h1:Dhd985XPs7jluiymwWYZ0G4Z61jb3vdS329zhj2hYo0=
 github.com/mailru/easyjson v0.7.7 h1:UGYAvKxe3sBsEDzO8ZeWOSlIQfWFlxbzLZe7hwFURr0=
 github.com/mailru/easyjson v0.7.7/go.mod h1:xzfreul335JAWq5oZzymOObrkdz5UnU4kGfJJLY9Nlc=
-github.com/martinemde/go-unifi v1.33.1-0.20260301011058-4c776d345022 h1:RVs+jq/x676sMxIsDR/nC2zfVYEO5uPdrSGH5pJV5qw=
-github.com/martinemde/go-unifi v1.33.1-0.20260301011058-4c776d345022/go.mod h1:oRmQLN4SG1UEqa19QJNqpoXzFCb1SZp0ELPlD7ktCJQ=
+github.com/martinemde/go-unifi v1.33.1-0.20260301015005-e0a6aaff7c53 h1:6yqFYVEZpSEUHufxQf+FIteQhnpO+Hl5F/1ADxgP8ks=
+github.com/martinemde/go-unifi v1.33.1-0.20260301015005-e0a6aaff7c53/go.mod h1:oRmQLN4SG1UEqa19QJNqpoXzFCb1SZp0ELPlD7ktCJQ=
 github.com/mattn/go-colorable v0.1.9/go.mod h1:u6P/XSegPjTcexA+o6vUJrdnUu04hMope9wVRipJSqc=
 github.com/mattn/go-colorable v0.1.12/go.mod h1:u5H1YNBxpqRaxsYJYSkiCWKzEfiAb1Gb520KVy5xxl4=
 github.com/mattn/go-colorable v0.1.14 h1:9A9LHSqF/7dyVVX6g0U9cwm9pG3kP9gSzcuIPHPsaIE=
